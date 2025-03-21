@@ -16,7 +16,7 @@ file_handler.setLevel(logging.DEBUG)
 # Rotating file handler
 rotatingFileHandler = RotatingFileHandler(
     "log_files/details.log",
-    maxBytes=1024*1024,
+    maxBytes=1024*1024*100,
     backupCount=20
 )
 
