@@ -1,0 +1,13 @@
+[Unit]
+Description=Redis Email Worker
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/Mail-Worker
+ExecStart=/usr/bin/python3 /home/ubuntu/Mail-Worker/worker.py
+Restart=always
+EnvironmentFile=/home/ubuntu/Mail-Worker/.env
+
+[Install]
+WantedBy=multi-user.target
