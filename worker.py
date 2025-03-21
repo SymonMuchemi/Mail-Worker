@@ -64,3 +64,4 @@ while True:
                     redis_client.xack(STREAM_NAME, GROUP_NAME, msg_id)
     except Exception as e:
         logger.error(f"Error reading message: {e}")
+        exit(100)
