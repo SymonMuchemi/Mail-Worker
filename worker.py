@@ -28,6 +28,7 @@ PORT = os.getenv("PORT")
 try:
     redis_client.xgroup_create(STREAM_NAME, GROUP_NAME, id="0", mkstream=True)
 except Exception as e:
+    print('Consumer group already created!')
     pass
 
 
