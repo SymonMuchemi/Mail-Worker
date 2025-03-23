@@ -9,11 +9,30 @@ jobs:
     deploy:
         runs-on: self-hosted
 
+        env:
+            DEPLOY_PATH: "/home/ubuntu/Mail-Worker"
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
             
-            - name: Deploy to server
+            - name: Ensure Repository Exists
               run: |
-                cd /home/ubuntu
-                ./deploy_worker.sh
+                if [ ! -d "$DEPLOY_PATH" ]; then
+                    git clone https://github.com/SymonMuchemi/Mail-Worker.git $DEPLOY_PATH
+                fi
+            
+            - name: Stop and remove existing containers
+              run: |
+                cd $DEPLOY_PATH
+                sudo docker-compose down || true
+          
+            - name: Pull latest changes
+              run: |
+                cd $DEPLOY_PATH
+                git pull origin main
+            
+            - name: Build and start containers
+              run: |
+                cd $DEPLOY_PATH
+                sudo docker-compose up --build -d
